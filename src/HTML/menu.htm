@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta charset="UTF-8">
+	 <title>Ticket-System</title>
+<style>
+body {text-align:center; margin-left:auto; margin-right:auto; font-family: Arial,Helvetica Neue,Helvetica,sans-serif; }
+div {margin: 20px 150px 20px 150px; border: solid 1px; background-color: #fafafa;  border-radius: 8px;}
+table {padding:0px ; margin: 0px}
+td {padding:0px 5px 0px 5px ; margin: 0px}
+tr {padding:0px ; margin: 0px}
+input[type=button]{ 
+background-color: #00b068;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 20px; 
+  font-weight: bold;
+  }
+input[type=button]:active {
+  background-color: #7D8;
+}
+</style>
+</head>
+<body>
+
+
+
+<div id="main_menu" style="display: block;">
+<table style="width:100%;">
+	<tr><td>
+		<input style="width:100%; background-color: #ddd; color: black;" type="button" id="mod_name" value="Narkoseaufklärung" onclick="change_name_menu();">
+		<br>
+		<br>
+	</td></tr>
+	<tr><td>
+		<a id="msg_off" style="width:100%; display: none;   font-size: 25px; font-weight: bold;">Anzeige ist inaktiv. <br>Aktivieren unter "Setup". </a>
+		<table id="main_tab" style="width:100%; display:inline;">
+			<tr>
+				<td>
+					<table style="width:100%">
+						<tr><td>
+							<a>Tickets</a>
+						</td></tr>
+						<tr><td>
+							<select id="sel_tickets" multiple onchange="update_selection();" style="width:100%; height:250px; font-size: 16px;">
+							</select>
+						</td></tr>
+						<tr><td>
+							<a id="pat_name_label">Patient</a>
+						</td></tr>
+						<tr><td>
+							<table style="width:100%">
+								<tr>
+									<td><input type="button" id="new_ticket" value="Neues Ticket" onclick="ticket_menu();"></td>
+									<td><input type="button" id="del_ticket" value="Ticket löschen" onclick="del_ticket();"></td>
+								</tr>
+							</table>
+						</td></tr>
+					</table>
+				</td>
+				<td>
+					<table style="width:100%">
+						<tr><td>
+							<a>Behandlungsräume</a>
+						</td></tr>
+						
+						<tr><td>
+								<table>
+									<tr>
+										<td style="width:200px">
+											<table>
+												<tr><td style="text-align:left;">
+													<a style="font-weight: bold;">Kabine 1</a>
+												</td></tr>
+												<tr><td style="text-align:left;">
+													<a id="cab1" style="font-size: 18px; font-style: italic;">Leer</a>
+												</td></tr>
+											</table>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td><input type="button" id="c1_in" value="Patient holen" onclick="change_cab_status(1, false);"></td> 
+													<td><input type="button" id="c1_out" value="Leer" onclick="change_cab_status(1, true);"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td></tr>
+						
+						<tr><td>
+								<table>
+									<tr>
+										<td style="width:200px">
+											<table>
+												<tr><td style="text-align:left;">
+													<a style="font-weight: bold;">Kabine 2</a>
+												</td></tr>
+												<tr><td style="text-align:left;">
+													<a id="cab2" style="font-size: 18px; font-style: italic;">Leer</a>
+												</td></tr>
+											</table>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td><input type="button" id="c2_in" value="Patient holen" onclick="change_cab_status(2, false);"></td> 
+													<td><input type="button" id="c2_out" value="Leer" onclick="change_cab_status(2, true);"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td></tr>
+						
+						<tr><td>
+								<table>
+									<tr>
+										<td style="width:200px">
+											<table>
+												<tr><td style="text-align:left;">
+													<a style="font-weight: bold;">Kabine 3</a>
+												</td></tr>
+												<tr><td style="text-align:left;">
+													<a id="cab3" style="font-size: 18px; font-style: italic;">Leer</a>
+												</td></tr>
+											</table>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td><input type="button" id="c3_in" value="Patient holen" onclick="change_cab_status(3, false);"></td> 
+													<td><input type="button" id="c3_out" value="Leer" onclick="change_cab_status(3, true);"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td></tr>
+						
+						<tr><td>
+								<table>
+									<tr>
+										<td style="width:200px">
+											<table>
+												<tr><td style="text-align:left;">
+													<a style="font-weight: bold;">Behandlungszimmer 1</a>
+												</td></tr>
+												<tr><td style="text-align:left;">
+													<a id="cab4" style="font-size: 18px; font-style: italic;">Leer</a>
+												</td></tr>
+											</table>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td><input type="button" id="c4_in" value="Patient holen" onclick="change_cab_status(4, false);"></td> 
+													<td><input type="button" id="c4_out" value="Leer" onclick="change_cab_status(4, true);"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td></tr>
+						
+						<tr><td>
+								<table>
+									<tr>
+										<td style="width:200px">
+											<table>
+												<tr><td style="text-align:left;">
+													<a style="font-weight: bold;">Behandlungszimmer 2</a>
+												</td></tr>
+												<tr><td style="text-align:left;">
+													<a id="cab5" style="font-size: 18px; font-style: italic;">Leer</a>
+												</td></tr>
+											</table>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td><input type="button" id="c5_in" value="Patient holen" onclick="change_cab_status(5, false);"></td> 
+													<td><input type="button" id="c5_out" value="Leer" onclick="change_cab_status(5, true);"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td></tr>
+						
+					</table>
+				</td>
+			</tr>
+		</table>
+		
+	</td></tr>
+	<tr><td>
+		<br>
+		<input style="width:100%" type="button" id="mod_setup_button" value="Setup" onclick="setup_menu();">
+	</td></tr>
+</table>
+</div>
+
+
+<div id="change_mod_name" style="display:none;">
+	<p>
+		<a style="font-size: 20px; font-weight: bold;">Modulname</a>
+		<br>
+		<br>
+		<input id="mod_name_in" style="width:500px" value="">
+		<br>
+		<br>
+		<input type="button" id="mod_name_ok" value="OK" onclick="change_mod_name();"> 
+		<input type="button" id="mod_name_cancel" value="Abbrechen" onclick="main_menu();">
+		<br>
+		<br>
+		<input type="button" id="clear_tickets" value="Ticketzähler zurücksetzen (Vorsicht: löscht alle Tickets!)" onclick="submit_data('datasource=reset'); main_menu();" style="background-color: #c00; color: white;">
+	</p>
+</div>
+
+<div id="create_new_ticket" style="display: none;">
+	<p
+		<a style="font-size: 20px; font-weight: bold;">Neues Ticket<br><br>Name:</a>
+		<br>
+		<br>
+		<input id="new_ticket_in" style="width:500px">
+		<br>
+		<br>
+		<input type="button" id="new_ticket_ok" value="Neues Ticket" onclick="new_ticket();"> 
+		<input type="button" id="new_ticket_cancel" value="Abbrechen" onclick="main_menu();">
+	</p>
+</div>
+
+<div id="mod_setup" style="display: none;">
+	<p>
+		<a style="font-size: 20px; font-weight: bold;">Status</a>
+		<br>
+		<br>
+		<input type="button" id="mod_setup_start" value="Eröffnen" onclick="submit_data('datasource=start_session');"> 
+		<input type="button" id="mod_setup_stop" value="Schließen" onclick="submit_data('datasource=stop_session');">
+		<input type="button" id="mod_setup_back" value="Abbrechen" onclick="main_menu();">
+		<br>
+		<br>
+		<br>
+		<br>
+		<a style="font-size: 20px; font-weight: bold;">Bildschirmtext bei Abschluss</a>
+
+		<br>
+		<br>
+		
+		<input id="new_off_txt_in" value="" style="width:500px">
+		<br>
+		<input type="button" id="mod_setup_off_txt" value="OK" onclick="change_off_txt();">
+
+
+	</p>
+</div>
+
+
+<script>
+submit_data("datasource=0");
+update_selection();
+
+	function submit_data(data) {
+	    var http = new XMLHttpRequest();
+	    http.open("POST", "json.asp", true);
+	    //http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	    http.send(data);
+	    http.onload = function() {
+			var obj = JSON.parse(http.responseText); 
+			//extracting ticket-list
+			var t_lst = obj.ticket_lst;
+			var n = t_lst.length;
+			
+			clear_select();
+			
+			for (i = 0; i < n; i++) {
+				add_element_to_select(t_lst[i]);
+			}
+			update_selection();
+			//title
+			document.getElementById("mod_name").value=obj.title;
+			document.getElementById("mod_name_in").value=obj.title;
+			//off_txt
+			document.getElementById("new_off_txt_in").value=obj.off_txt;
+			//cabins
+			document.getElementById("cab1").innerHTML = obj.cabin_lst[0];
+			document.getElementById("cab2").innerHTML = obj.cabin_lst[1];
+			document.getElementById("cab3").innerHTML = obj.cabin_lst[2];
+			document.getElementById("cab4").innerHTML = obj.cabin_lst[3];
+			document.getElementById("cab5").innerHTML = obj.cabin_lst[4];
+			//active?
+			if(obj.display_off==true)
+			{
+				inactive_display();
+			}
+			else
+			{
+				active_display();
+			}
+			
+			
+			
+		}
+	}
+	
+	function clear_select()
+	{
+		var select = document.getElementById("sel_tickets");
+		var length_l = select.options.length;
+		for (i = length_l-1; i >= 0; i--) {
+			select.options[i] = null;
+		}
+		document.getElementById("pat_name_label").innerHTML = ""; 
+	}
+	
+	function add_element_to_select(e)
+	{
+		var x = document.getElementById("sel_tickets");
+		var option = document.createElement("option");
+		option.text = e;
+		x.add(option);
+	}
+
+function inactive_display()
+{
+	document.getElementById("main_tab").style.display="none";
+	document.getElementById("msg_off").style.display="inline";
+	main_menu();
+}
+
+function active_display()
+{
+	document.getElementById("main_tab").style.display="inline";
+	document.getElementById("msg_off").style.display="none";
+	main_menu();
+}
+
+function main_menu()
+{
+	document.getElementById("main_menu").style.display="block";
+	document.getElementById("change_mod_name").style.display="none";
+	document.getElementById("create_new_ticket").style.display="none";
+	document.getElementById("mod_setup").style.display="none";
+}
+
+function setup_menu()
+{
+	document.getElementById("main_menu").style.display="none";
+	document.getElementById("change_mod_name").style.display="none";
+	document.getElementById("create_new_ticket").style.display="none";
+	document.getElementById("mod_setup").style.display="block";
+}
+
+function change_name_menu()
+{
+	document.getElementById("main_menu").style.display="none";
+	document.getElementById("change_mod_name").style.display="block";
+	document.getElementById("create_new_ticket").style.display="none";
+	document.getElementById("mod_setup").style.display="none";
+	document.getElementById("mod_name_in").value=document.getElementById("mod_name").value;
+	document.getElementById("mod_name_in").focus(); 
+}
+
+function ticket_menu()
+{
+	document.getElementById("main_menu").style.display="none";
+	document.getElementById("change_mod_name").style.display="none";
+	document.getElementById("create_new_ticket").style.display="block";
+	document.getElementById("mod_setup").style.display="none";
+	document.getElementById("new_ticket_in").value=""; 
+	document.getElementById("new_ticket_in").focus(); 
+}
+
+function del_ticket()
+{
+	var tk_name = document.getElementById("pat_name_label").innerHTML; 
+	if(tk_name!="")
+	{
+		var conf = confirm("Wollen Sie \"" + tk_name + "\" wirklich löschen?");
+		if (conf == true) {
+			submit_data("datasource=del_ticket&t_name=" + tk_name);
+		} 
+	}
+}
+
+function new_ticket()
+{
+	var tk_name = document.getElementById("new_ticket_in").value; 
+	if(tk_name!="")
+	{
+		var re = tk_name.replace(/=|&|;|amp|"/gi , " ");
+		submit_data("datasource=new_ticket&t_name=" + re);
+		main_menu();
+	}
+}
+
+function change_mod_name()
+{
+	var tk_name = document.getElementById("mod_name_in").value; 
+	var re = tk_name.replace(/=|&|;|amp|"/gi , " ");
+	submit_data("datasource=new_mod_name&mod_name=" + re);
+	main_menu();
+}
+
+function change_off_txt()
+{
+	var tk_name = document.getElementById("new_off_txt_in").value; 
+	var re = tk_name.replace(/=|&|;|amp|"/gi , " ");
+	submit_data("datasource=new_off_txt&txt=" + re);
+	main_menu();
+}
+
+
+function change_cab_status(nr, empty)
+{
+	 
+	if(empty==true)
+		{
+			submit_data("datasource=change_cab_stat&t_name=Leer&number=" + nr);
+		}
+	else
+		{
+			var tk_name = document.getElementById("pat_name_label").innerHTML;
+			if(tk_name!="")
+			{
+				submit_data("datasource=change_cab_stat&t_name=" + tk_name + "&number=" + nr);
+			}
+		}
+}
+
+function update_selection()
+{
+	d = document.getElementById("sel_tickets").value;
+	document.getElementById("pat_name_label").innerHTML = d; 
+}
+
+</script>
+
+</body>
+</html>
